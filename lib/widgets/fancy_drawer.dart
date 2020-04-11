@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gsec/pages/about_us.dart';
 import 'package:gsec/pages/devices.dart';
 import 'package:gsec/pages/page.dart';
+import 'package:gsec/pages/payments_view.dart';
 import 'package:gsec/pages/settings.dart';
+import 'package:gsec/provider/payments.dart';
+import 'package:provider/provider.dart';
 
 class FancyDrawer extends StatefulWidget {
   const FancyDrawer({Key key}) : super(key: key);
@@ -16,6 +21,14 @@ class _FancyDrawerState extends State<FancyDrawer>
   AnimationController _animationController;
   Animation<double> _animation;
 
+  Payments _paymentsProvider;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _paymentsProvider = Provider.of<Payments>(context);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -24,6 +37,15 @@ class _FancyDrawerState extends State<FancyDrawer>
       duration: Duration(milliseconds: 300),
     );
     _animation = Tween<double>(begin: 0, end: 30).animate(_animationController);
+  }
+
+  Future<void> share() async {
+    await FlutterShare.share(
+      title: 'Share Gadget Security',
+      text: 'Check out this amazing applictcation',
+      linkUrl: 'https://flutter.dev/',
+      chooserTitle: 'Gadget Security',
+    );
   }
 
   @override
@@ -65,18 +87,23 @@ class _FancyDrawerState extends State<FancyDrawer>
               label: "Premium",
               icon: FontAwesomeIcons.moneyBill,
               time: 30.0,
+              onTap: _paymentsProvider?.pay,
             ),
             DrawerItem(
               animation: _animation,
               label: "Share",
               icon: FontAwesomeIcons.share,
               time: 40.0,
+              onTap: share,
             ),
             DrawerItem(
               animation: _animation,
               label: "About Us",
               icon: FontAwesomeIcons.info,
               time: 50.0,
+              onTap: () {
+                _navigateTo(context, AboutUs());
+              },
             ),
           ],
         ),

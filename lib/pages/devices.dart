@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gsec/pages/forms/forms.dart';
+import 'package:gsec/pages/page.dart';
 import 'package:gsec/widgets/device_card.dart';
 
 class Devices extends StatelessWidget {
@@ -7,6 +10,13 @@ class Devices extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          var route = animateRoute(context: context, page: Forms());
+          Navigator.push(context, route);
+        },
+        child: Icon(Icons.add),
+      ),
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[

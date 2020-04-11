@@ -55,8 +55,8 @@ class TopButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: GestureDetector(
-        onTap: onTap,
+      child: FlatButton(
+        onPressed: onTap,
         child: Column(
           children: <Widget>[
             Container(

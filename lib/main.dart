@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gsec/pages/dashboard.dart';
 import 'package:gsec/pages/page.dart';
+import 'package:gsec/provider/payments.dart';
 import 'package:gsec/provider/security.dart';
 import 'package:gsec/widgets/neumorphs.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,9 @@ class App extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (BuildContext context) => Security(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => Payments(),
         ),
       ],
       child: Home(),

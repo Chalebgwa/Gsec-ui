@@ -15,9 +15,10 @@ class Dashboard extends StatelessWidget {
   Dashboard({Key key}) : super(key: key);
   void turnPage(int page) {}
 
-  void scan() async {
+  void scan(BuildContext context) async {
     String value = await scanner.scan();
-    print(value);
+    var snackbar = SnackBar(content: Text(value ?? "Error"));
+    Scaffold.of(context).showSnackBar(snackbar);
   }
 
   @override
@@ -184,7 +185,9 @@ class Dashboard extends StatelessWidget {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(30),
                                       ),
-                                      onPressed: scan,
+                                      onPressed: () {
+                                        scan(context);
+                                      },
                                       child: Container(
                                         alignment: Alignment.center,
                                         child: Text("Scan QR code"),
@@ -284,7 +287,12 @@ class Dashboard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  TopButton(icon: Icons.camera, label: "Scan", onTap: scan),
+                  TopButton(
+                      icon: Icons.camera,
+                      label: "Scan",
+                      onTap: () {
+                        scan(context);
+                      }),
                   TopButton(
                     icon: Icons.perm_device_information,
                     label: "Device Info",
